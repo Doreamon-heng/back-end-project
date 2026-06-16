@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 
-class Products_image extends Model
+class Product_status extends Model
 {
     protected $fillable = [
-        'file_name',
-        'file_url',
+        'status',
         'product_id',
     ];
 

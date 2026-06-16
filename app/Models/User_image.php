@@ -5,19 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class Orders extends Model
+class User_image extends Model
 {
     protected $fillable = [
-        'order_date',
-        'total_price',
-        'payment',
-        'status',
-        'invoice',
         'user_id',
+        'image_path',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    
 }

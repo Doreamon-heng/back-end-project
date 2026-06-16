@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->date('order_date');
-            $table->decimal('total_price', 10, 2);
-            $table->string('payment');
-            $table->string('status');
-            $table->string('invoice');
+            $table->integer('otp_code')->unique();
+            $table->boolean('is_used')->default(false);
+            $table->dateTime('issued_at');
+            $table->dateTime('expires_at');
+            $table->boolean('verify')->default(false);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('otps');
     }
 };

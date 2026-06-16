@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Product;
 
-class Products_image extends Model
+class Stock extends Model
 {
     protected $fillable = [
-        'file_name',
-        'file_url',
+        'max',
+        'min',
         'product_id',
+
     ];
 
-    public function product()
-    {
+    public function product(){
         return $this->belongsTo(Product::class, 'product_id');
     }
 }

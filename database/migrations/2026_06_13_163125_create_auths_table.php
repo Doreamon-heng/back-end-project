@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('auths', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->integer('otp_code')->unique();
+            $table->boolean('is_used')->default(false);
+            $table->dateTime('issued_at');
+            $table->dateTime('expires_at');
+            $table->boolean('verify')->default(false);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
