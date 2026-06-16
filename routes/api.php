@@ -8,6 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
+<<<<<<< HEAD
 Route::post('/register', [\App\Http\Controllers\api\AuthController::class, 'register'])->name('register');
 Route::post('/login', [\App\Http\Controllers\api\AuthController::class, 'login'])->name('login');
 
@@ -38,3 +39,7 @@ Route::middleware(['auth:sanctum', 'user'])->group(function () {
     // Define routes for user role here
 });
   
+=======
+Route::get('/categories', [App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
+Route::post('/categories', [App\Http\Controllers\api\CategoryController::class, 'create'])->name('categories.create');
+>>>>>>> 9b7122d8e9f7ed8ff29fa91149b868f027b51618
