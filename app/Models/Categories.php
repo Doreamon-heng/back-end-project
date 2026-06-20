@@ -14,7 +14,7 @@ class Categories extends Model
     public function Categories()
     {
         return $this->hasMany(Categories::class, 'category_id');
-    }
+    }   
 }
 
 
