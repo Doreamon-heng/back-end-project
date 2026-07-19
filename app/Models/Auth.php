@@ -13,5 +13,6 @@ class Auth extends Model
         'issued_at',
         'expires_at',
         'verify',
+        'role_id',
     ];
 }

@@ -3,6 +3,11 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ProtectSite;
+use App\Http\Middleware\CheckRole;
+use App\Http\Middleware\RequestLogger;
+use App\Http\Middleware\UserMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,15 +17,20 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+
         $middleware->prepend([
-            App\Http\Middleware\RequestLogger::class,
+            RequestLogger::class,
         ]);
 
         $middleware->alias([
-            'protect.site' => App\Http\Middleware\ProtectSite::class,
-            'role' => App\Http\Middleware\CheckRole::class,
+            
+            'protect.site' => ProtectSite::class,
+            'role'         => CheckRole::class,
+            'admin'        => AdminMiddleware::class,
+            'user'         => UserMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->create();
