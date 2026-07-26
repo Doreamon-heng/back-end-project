@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('categories_images', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_id');
             $table->string('image_url');
             $table->string('file_name');
             $table->timestamps();

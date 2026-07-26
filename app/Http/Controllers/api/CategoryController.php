@@ -4,69 +4,118 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Categories;
-use App\Models\Categories_image;
-use Validator;
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Categories::with('Categories')->get();
-        return response()->json($categories);
+        try {
+            $category = Categories::with('categories_image')->all();
+            return response()->json([
+                'data' => $category,
+                'message' => 'Categories retrieved successfully'
+            ]);
+        } catch (\Throwable $e) {
+            return $this->handleException($e, 'Unable to retrieve categories');
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $category = Categories::find($id);
+            if (!$category ) {
+                return response()->json(['error' => 'Categories not found'], 404);
+            }
+            return response()->json([
+                'data' => $category,
+                'message' => 'Categories details retrieved successfully'
+            ]);
+        } catch (\Throwable $e) {
+            return $this->handleException($e, 'Unable to retrieve category details');
+        }
     }
 
     //create category
-    public function create(Request $request)
+
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
+        try {
+            $validator = Validator::make($request->all(), [
+                'name' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('categories')->ignore($request->id),
+                ],
+                'description' => 'nullable|string',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
+            }
+
+            $category = Categories::create([
+                'name' => $request->name,
+                
+                'description' => $request->description,
+            ]);
+
+            return response()->json([
+                'data' => $category,
+                'message' => 'Categories created successfully'
+            ], 201);
+        } catch (\Throwable $e) {
+            return $this->handleException($e, 'Unable to create category');
         }
-
-        $category = Categories::create([
-            'name' => $request->name,
-            'description' => $request->description,
-        ]);
-
-        return response()->json($category, 201);
     }
 
-    //create image for category
-    public function createImage(Request $request, $categoryId)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'image_url' => 'required|string|max:255',
-            'file_name' => 'required|string|max:255',
-        ]);
+        try {
+            $category = Categories::find($id);
+           
+            if (!$category) {
+                return response()->json(['error' => 'Categories not found'], 404);
+            }
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            if ($request->has('name')) {
+                $category->name = $request->name;
+            }
+            if ($request->has('description')) {
+                $category->description = $request->description;
+            }
+
+            $category->save();
+            
+
+            return response()->json([
+                'data' => $category,
+                'message' => 'Categories updated successfully'
+            ], 200);
+        } catch (\Throwable $e) {
+            return $this->handleException($e, 'Unable to update category');
         }
-
-        $categoryImage = Categories_image::create([
-            'category_id' => $categoryId,
-            'image_url' => $request->image_url,
-            'file_name' => $request->file_name,
-        ]);
-
-        return response()->json($categoryImage, 201);
     }
 
-    //get details of category
-    public function getDetails($id)
+    public function destroy($id)
     {
-        $category = Categories::with('Categories')->find($id);
-        if (!$category) {
-            return response()->json(['error' => 'Category not found'], 404);
+        try {
+            $category = Categories::find($id);
+            if (!$category) {
+                return response()->json(['error' => 'Categories not found'], 404);
+            }
+
+            $category->delete();
+
+            return response()->json([
+                'message' => 'Categories deleted successfully'
+            ], 200);
+        } catch (\Throwable $e) {
+            return $this->handleException($e, 'Unable to delete category');
         }
-        return response()->json($category);
     }
-
-
-
 }

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Category;
+use App\Models\Categories;
 
 class Products extends Model
 {
@@ -17,6 +17,30 @@ class Products extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class, 'category_id');
+        return $this->belongsTo(Categories::class, 'category_id');
+    }
+    public function customers()
+    {
+        return $this->hasMany(Customers::class, 'product_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Orders::class, 'product_id');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payments::class, 'product_id');
+    }
+
+    public function banks()
+    {
+        return $this->hasMany(Bank::class, 'product_id');
+    }
+
+    public function categories()
+    {
+        return $this->belongsTo(Categories::class, 'category_id');
     }
 }

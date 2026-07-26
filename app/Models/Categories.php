@@ -6,15 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
+    protected $table = 'categories';
+
     protected $fillable = [
         'name',
         'description',
     ];
 
+
     public function Categories()
     {
-        return $this->hasMany(Categories::class, 'category_id');
-    }   
+        return $this->hasMany(...);
+    }
 }
 
 

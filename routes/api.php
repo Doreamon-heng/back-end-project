@@ -36,20 +36,43 @@ Route::post('/recovery-account-by-phone', [\App\Http\Controllers\api\AuthControl
 
 
 
+//Route for product management
+Route::get('/products', [\App\Http\Controllers\api\ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'show'])->name('products.show');
+Route::post('/products', [\App\Http\Controllers\api\ProductController::class, 'create'])->name('products.create');
+Route::put('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'destroy'])->name('products.destroy');
+
+
+
 //route for admin roles
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     //route here for admin role
     Route::get('logout', [\App\Http\Controllers\api\AuthController::class, 'logout'])->name('logout');
-     
+
     //route for user management
     Route::get('/users', [\App\Http\Controllers\api\UserController::class, 'getAllUsers'])->name('users.index');
     Route::post('/users', [\App\Http\Controllers\api\UserController::class, 'createUser'])->name('users.store');
     Route::get('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'getUserById'])->name('users.show');
     Route::put('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{id}', [\App\Http\Controllers\api\UserController::class, 'deleteUser'])->name('users.destroy');
-});
 
-//Route for editor roles
+    //route for customer management
+    Route::get('/customers', [\App\Http\Controllers\api\CustomerController::class, 'getAllCustomers'])->name('customers.index');
+    Route::post('/customers', [\App\Http\Controllers\api\CustomerController::class, 'createCustomer'])->name('customers.store');
+    Route::get('/customers/{id}', [\App\Http\Controllers\api\CustomerController::class, 'getCustomerDetails'])->name('customers.show');
+    Route::put('/customers/{id}', [\App\Http\Controllers\api\CustomerController::class, 'updateCustomer'])->name('customers.update');
+    Route::delete('/customers/{id}', [\App\Http\Controllers\api\CustomerController::class, 'deleteCustomer'])->name('customers.destroy');
+
+    //Category management routes
+Route::get('/categories', [\App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'show'])->name('categories.show');
+Route::post('/categories', [\App\Http\Controllers\api\CategoryController::class, 'store'])->name('categories.store');
+Route::put('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'update'])->name('categories.update');
+Route::delete('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'destroy'])->name('categories.destroy');
+    });
+
+//Route for editor roles 
 // Route::middleware(['auth:sanctum', 'editor'])->group(function () {
 //     // Define routes for editor role here
 //     Route::get('/editor-dashboard', [\App\Http\Controllers\api\EditorController::class, 'dashboard'])->name('editor.dashboard');
