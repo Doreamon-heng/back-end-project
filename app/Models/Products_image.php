@@ -7,14 +7,23 @@ use App\Models\Product;
 
 class Products_image extends Model
 {
+      protected $table = 'product_images';
+
     protected $fillable = [
-        'file_name',
-        'file_url',
         'product_id',
+        'file_name',
+        'file_path',
+        'image_url',
+        'is_enabled'
     ];
 
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Products::class);
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return $this->is_enabled ? 'enabled' : 'disabled';
     }
 }

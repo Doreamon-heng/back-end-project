@@ -51,4 +51,6 @@ class User_imageController extends Controller
             return $this->handleException($e, 'Unable to retrieve user image');
         }
     }
+
+    
 }

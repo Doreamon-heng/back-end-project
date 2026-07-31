@@ -70,6 +70,7 @@ class AuthController extends Controller
             }
 
             $user = User::where('email', $r->email)->first();
+            $role = Role::where('role_id', $r->role_id);
 
             if (!$user || !Hash::check($r->password, $user->password)) {
                 return response()->json([
@@ -79,6 +80,8 @@ class AuthController extends Controller
 
             $token = $user->createToken('auth-token')->plainTextToken;
 
+
+            //response user,token
             return response()->json([
                 'data' => [
                     'user' => [
@@ -86,8 +89,12 @@ class AuthController extends Controller
                         'name' => $user->name,
                         'email' => $user->email,
                     ],
+                    'role' => $role,
                     'token' => $token,
                 ],
+
+                // 'access_token' => $token,
+                // 'token_type' => 'Bearer',
                 'message' => 'User logged in successfully'
             ]);
         } catch (\Throwable $e) {

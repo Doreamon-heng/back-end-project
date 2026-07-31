@@ -15,4 +15,5 @@ class Auth extends Model
         'verify',
         'role_id',
     ];
+
 }

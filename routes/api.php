@@ -7,10 +7,6 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
- 
-
-
-
 
 
 Route::post('/register', [\App\Http\Controllers\api\AuthController::class, 'register'])->name('register');
@@ -21,18 +17,18 @@ Route::post('/recovery-account', [\App\Http\Controllers\api\AuthController::clas
 Route::post('/recovery-account-by-phone', [\App\Http\Controllers\api\AuthController::class, 'recoveryAccountByPhone'])->name('recovery.account.phone');
 
 
-    //route for roles
-    Route::get('/roles', [\App\Http\Controllers\api\RoleController::class, 'index'])->name('roles.index');
-    Route::get('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'show'])->name('roles.show');
-    Route::post('/roles', [\App\Http\Controllers\api\RoleController::class, 'store'])->name('roles.store');
-    Route::put('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'update'])->name('roles.update');
-    Route::delete('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'destroy'])->name('roles.destroy');
-     //route for user roles
-    Route::get('/roles-user', [\App\Http\Controllers\api\Role_userController::class, 'index'])->name('roles-user.index');
-    Route::get('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'show'])->name('roles-user.show');
-    Route::post('/roles-user', [\App\Http\Controllers\api\Role_userController::class, 'store'])->name('roles-user.store');
-    Route::put('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'update'])->name('roles-user.update');
-    Route::delete('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'destroy'])->name('roles-user.destroy');
+//route for roles
+Route::get('/roles', [\App\Http\Controllers\api\RoleController::class, 'index'])->name('roles.index');
+Route::get('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'show'])->name('roles.show');
+Route::post('/roles', [\App\Http\Controllers\api\RoleController::class, 'store'])->name('roles.store');
+Route::put('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'update'])->name('roles.update');
+Route::delete('/roles/{id}', [\App\Http\Controllers\api\RoleController::class, 'destroy'])->name('roles.destroy');
+//route for user roles
+Route::get('/roles-user', [\App\Http\Controllers\api\Role_userController::class, 'index'])->name('roles-user.index');
+Route::get('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'show'])->name('roles-user.show');
+Route::post('/roles-user', [\App\Http\Controllers\api\Role_userController::class, 'store'])->name('roles-user.store');
+Route::put('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'update'])->name('roles-user.update');
+Route::delete('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController::class, 'destroy'])->name('roles-user.destroy');
 
 
 
@@ -43,6 +39,12 @@ Route::post('/products', [\App\Http\Controllers\api\ProductController::class, 'c
 Route::put('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'destroy'])->name('products.destroy');
 
+//categories route
+// Route::get('/categories', [\App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
+// Route::get('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'show'])->name('categories.show');
+// //image
+// Route::get('/categories_image/', [\App\Http\Controllers\api\Category_imageController::class, 'getAllCateImage'])->name('categories_image.index');
+// Route::get('/categories_image/{id}', [\App\Http\Controllers\api\Category_imageController::class, 'detailsCateImage'])->name('categories_image.show');
 
 
 //route for admin roles
@@ -65,12 +67,32 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::delete('/customers/{id}', [\App\Http\Controllers\api\CustomerController::class, 'deleteCustomer'])->name('customers.destroy');
 
     //Category management routes
-Route::get('/categories', [\App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'show'])->name('categories.show');
-Route::post('/categories', [\App\Http\Controllers\api\CategoryController::class, 'store'])->name('categories.store');
-Route::put('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'update'])->name('categories.update');
-Route::delete('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'destroy'])->name('categories.destroy');
-    });
+    Route::get('/categories', [\App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'show'])->name('categories.show');
+    Route::post('/categories', [\App\Http\Controllers\api\CategoryController::class, 'store'])->name('categories.store');
+    Route::put('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'destroy'])->name('categories.destroy');
+
+    //bank route
+    Route::get('/banks', [\App\Http\Controllers\api\BankController::class, 'getBank'])->name('banks.index');
+    Route::get('/banks/{id}', [\App\Http\Controllers\api\BankController::class, 'detailsBank'])->name('banks.show');
+
+    Route::post('/banks', [\App\Http\Controllers\api\BankController::class, 'createBank'])->name('banks.store');
+
+
+
+
+
+
+    //image upload all route here
+    Route::get('/categories_image/', [\App\Http\Controllers\api\Category_imageController::class, 'getAllCateImage'])->name('categories_image.index');
+    Route::get('/categories_image/{id}', [\App\Http\Controllers\api\Category_imageController::class, 'detailsCateImage'])->name('categories_image.show');
+    Route::post('/categories_image', [\App\Http\Controllers\api\Category_imageController::class, 'createCateImage'])->name('categories_image.store');
+    Route::put('/categories_image/{id}', [\App\Http\Controllers\api\Category_imageController::class, 'updateCateImage'])->name('categories_image.update');
+    Route::put('/categories_image', [\App\Http\Controllers\api\Category_imageController::class, 'updateCateImage'])->name('categories_image.update_no_id');
+    Route::delete('/categories_image/{id}', [\App\Http\Controllers\api\Category_imageController::class, 'destroyCateImage'])->name('categories_image.delete');
+
+});
 
 //Route for editor roles 
 // Route::middleware(['auth:sanctum', 'editor'])->group(function () {
@@ -84,6 +106,5 @@ Route::delete('/categories/{id}', [\App\Http\Controllers\api\CategoryController:
 Route::middleware(['auth:sanctum', 'user'])->group(function () {
     // Define routes for user role here
     Route::get('/logout', [\App\Http\Controllers\api\AuthController::class, 'logout'])->name('logout');
-    
+
 });
-  

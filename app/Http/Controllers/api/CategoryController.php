@@ -5,17 +5,20 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Categories_image;
 use App\Models\Categories;
 use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
-    public function index()
+    // Get all categories with their image
+    public function index(Request $r)
     {
         try {
-            $category = Categories::with('categories_image')->all();
+            $categories = Categories::with('categories_image')->get();
+
             return response()->json([
-                'data' => $category,
+                'data' => $categories,
                 'message' => 'Categories retrieved successfully'
             ]);
         } catch (\Throwable $e) {
@@ -23,13 +26,16 @@ class CategoryController extends Controller
         }
     }
 
+    // Get single category with its image
     public function show($id)
     {
         try {
-            $category = Categories::find($id);
-            if (!$category ) {
+            $category = Categories::with('categories_image')->find($id);
+
+            if (!$category) {
                 return response()->json(['error' => 'Categories not found'], 404);
             }
+
             return response()->json([
                 'data' => $category,
                 'message' => 'Categories details retrieved successfully'
@@ -39,8 +45,7 @@ class CategoryController extends Controller
         }
     }
 
-    //create category
-
+    // Create category
     public function store(Request $request)
     {
         try {
@@ -60,7 +65,6 @@ class CategoryController extends Controller
 
             $category = Categories::create([
                 'name' => $request->name,
-                
                 'description' => $request->description,
             ]);
 
@@ -73,13 +77,29 @@ class CategoryController extends Controller
         }
     }
 
+    // Update category
     public function update(Request $request, $id)
     {
         try {
             $category = Categories::find($id);
-           
+
             if (!$category) {
                 return response()->json(['error' => 'Categories not found'], 404);
+            }
+
+            $validator = Validator::make($request->all(), [
+                'name' => [
+                    'sometimes',
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('categories')->ignore($category->id),
+                ],
+                'description' => 'nullable|string',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 400);
             }
 
             if ($request->has('name')) {
@@ -90,7 +110,6 @@ class CategoryController extends Controller
             }
 
             $category->save();
-            
 
             return response()->json([
                 'data' => $category,
@@ -101,10 +120,12 @@ class CategoryController extends Controller
         }
     }
 
+    // Delete category
     public function destroy($id)
     {
         try {
             $category = Categories::find($id);
+
             if (!$category) {
                 return response()->json(['error' => 'Categories not found'], 404);
             }

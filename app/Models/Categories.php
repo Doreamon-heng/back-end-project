@@ -16,7 +16,12 @@ class Categories extends Model
 
     public function Categories()
     {
-        return $this->hasMany(...);
+        return $this->hasMany('categories');
+    }
+
+    public function Categories_image()
+    {
+       return $this->hasOne(Categories_image::class, 'category_id');
     }
 }
 

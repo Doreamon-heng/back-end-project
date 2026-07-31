@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories_image extends Model
 {
+    protected $table = 'categories_images';
     protected $fillable = [
         'category_id',
+        'file_path',
         'image_url',
         'file_name',
     ];

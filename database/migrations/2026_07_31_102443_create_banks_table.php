@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('qr_code');
+            $table->string('name');
+            $table->string('qr_code')->nullable();
             $table->timestamps();
         });
     }
