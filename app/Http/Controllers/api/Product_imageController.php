@@ -20,9 +20,9 @@ class Product_imageController extends Controller
     }
 
     // ✅ Get single product image
-    public function show($id)
+    public function detailsProductImage($id)
     {
-        $image = Products_image::with('product')->find($id);
+        $image = Products_image::with('products')->find($id);
 
         if (!$image) {
             return response()->json(['success' => false, 'message' => 'Product image not found'], 404);
@@ -32,7 +32,7 @@ class Product_imageController extends Controller
     }
 
     // ✅ Create product image
-    public function store(Request $request)
+    public function createProductImage(Request $request)
     {
         $image = Products_image::create($request->all());
 

@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('slide_shows', function (Blueprint $table) {
+        Schema::create('slide_shows_image', function (Blueprint $table) {
             $table->id();
-            $table->text('title')->nullable();
-            $table->text('desc')->nullable();
-            $table->text('sub_title')->nullable();
-
+            $table->unsignedBigInteger('slide_show_id');
+            $table->string('file_name');
+            $table->string('image_url');
+            $table->boolean('is_enabled')->default(true);
+            $table->boolean('is_disabled')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('slide_shows');
+        Schema::dropIfExists('slide_shows_image');
     }
 };

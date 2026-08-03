@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('company_infos', function (Blueprint $table) {
             $table->id();
-            $table->string('logo');
-            $table->string('name');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('address');
-            $table->string('facebook')->nullable();
-            $table->string('youtube')->nullable();
-            $table->string('tiktok')->nullable();
-            $table->string('telegram')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('logo')->nullable();
+            $table->text('address')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('youtube_link')->nullable();
+            $table->string('tiktok_link')->nullable();
+            $table->string('telegram_link')->nullable();
             $table->timestamps();
         });
     }

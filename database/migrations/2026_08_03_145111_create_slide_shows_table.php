@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('title')->nullable();
             $table->text('desc')->nullable();
             $table->text('sub_title')->nullable();
-
             $table->timestamps();
         });
     }

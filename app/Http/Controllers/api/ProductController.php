@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Products::paginate(10);
+            $products = Products::with('category', 'products_image')->paginate(10);
             return response()->json($products);
         } catch (\Throwable $e) {
             return $this->handleException($e, 'Unable to retrieve products');

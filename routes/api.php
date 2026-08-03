@@ -32,12 +32,7 @@ Route::delete('/roles-user/{id}', [\App\Http\Controllers\api\Role_userController
 
 
 
-//Route for product management
-Route::get('/products', [\App\Http\Controllers\api\ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'show'])->name('products.show');
-Route::post('/products', [\App\Http\Controllers\api\ProductController::class, 'create'])->name('products.create');
-Route::put('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'update'])->name('products.update');
-Route::delete('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'destroy'])->name('products.destroy');
+
 
 //categories route
 // Route::get('/categories', [\App\Http\Controllers\api\CategoryController::class, 'index'])->name('categories.index');
@@ -73,11 +68,65 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::put('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'update'])->name('categories.update');
     Route::delete('/categories/{id}', [\App\Http\Controllers\api\CategoryController::class, 'destroy'])->name('categories.destroy');
 
+
+    //Route for product management
+    Route::get('/products', [\App\Http\Controllers\api\ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'show'])->name('products.show');
+    Route::post('/products', [\App\Http\Controllers\api\ProductController::class, 'create'])->name('products.create');
+    Route::put('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{id}', [\App\Http\Controllers\api\ProductController::class, 'destroy'])->name('products.destroy');
+
+    //Products image routes
+    Route::get('/products_image', [\App\Http\Controllers\api\Product_imageController::class, 'index'])->name('products_image.index');
+    Route::get('/products_image/{id}', [\App\Http\Controllers\api\Product_imageController::class, 'detailsProductImage'])->name('products  _image.show');
+    Route::post('/products_image', [\App\Http\Controllers\api\Product_imageController::class, 'createProductImage'])->name('products_image.store');
+    Route::put('/products_image/{id}', [\App\Http\Controllers\api\Product_imageController::class, 'updateProductImage'])->name('products_image.update');
+    Route::delete('/products_image/{id}', [\App\Http\Controllers\api\Product_imageController::class, 'deleteProductImage'])->name('products_image.destroy');
+
     //bank route
     Route::get('/banks', [\App\Http\Controllers\api\BankController::class, 'getBank'])->name('banks.index');
     Route::get('/banks/{id}', [\App\Http\Controllers\api\BankController::class, 'detailsBank'])->name('banks.show');
-
     Route::post('/banks', [\App\Http\Controllers\api\BankController::class, 'createBank'])->name('banks.store');
+    Route::put('/banks/{id}', [\App\Http\Controllers\api\BankController::class, 'updateBank'])->name('banks.update');
+    Route::delete('/banks/{id}', [\App\Http\Controllers\api\BankController::class, 'deleteBank'])->name('banks.destroy');
+
+
+    //order route
+
+
+
+    //warranty route
+
+    //customer route
+
+    //Otp route
+
+    
+    
+    //Slide show route
+    Route::get('/slide_show', [\App\Http\Controllers\api\Slide_showController::class, 'index'])->name('slide_show.index');
+    Route::get('/slide_show/{id}', [\App\Http\Controllers\api\Slide_showController::class, 'show'])->name('slide_show.show');
+    Route::post('/slide_show', [\App\Http\Controllers\api\Slide_showController::class, 'store'])->name('slide_show.store');
+    Route::put('/slide_show/{id}', [\App\Http\Controllers\api\Slide_showController::class, 'update'])->name('slide_show.update');
+    Route::delete('/slide_show/{id}', [\App\Http\Controllers\api\Slide_showController::class, 'destroy'])->name('slide_show.destroy');
+
+    //slide show image route
+    Route::get('/slide_show_images', [\App\Http\Controllers\api\SlideShowImageController::class, 'index'])->name('slide_show_image.index');
+    Route::get('/slide_show_images/{id}', [\App\Http\Controllers\api\SlideShowImageController::class, 'show'])->name('slide_show_image.show');
+    Route::post('/slide_show_images', [\App\Http\Controllers\api\SlideShowImageController::class, 'store'])->name('slide_show_image.store');
+    Route::put('/slide_show_images/{id}', [\App\Http\Controllers\api\SlideShowImageController::class, 'update'])->name('slide_show_image.update');
+    Route::delete('/slide_show_images/{id}', [\App\Http\Controllers\api\SlideShowImageController::class, 'destroy'])->name('slide_show_image.destroy');
+
+
+
+    //stock route
+
+    //Company info route
+    Route::get('/company_info', [\App\Http\Controllers\api\Company_infoController::class, 'index'])->name('company_info.index');
+    Route::get('/company_info/{id}', [\App\Http\Controllers\api\Company_infoController::class, 'show'])->name('company_info.show');
+    Route::post('/company_info', [\App\Http\Controllers\api\Company_infoController::class, 'store'])->name('company_info.store');
+    Route::put('/company_info/{id}', [\App\Http\Controllers\api\Company_infoController::class, 'update'])->name('company_info.update');
+    Route::delete('/company_info/{id}', [\App\Http\Controllers\api\Company_infoController::class, 'destroy'])->name('company_info.destroy'); 
 
 
 

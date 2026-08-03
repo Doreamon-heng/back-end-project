@@ -15,6 +15,10 @@ class Products extends Model
         'category_id',
     ];
 
+    public function products_image()
+    {
+        return $this->hasMany(Products_image::class, 'product_id');
+    }
     public function category()
     {
         return $this->belongsTo(Categories::class, 'category_id');

@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\Slide_show;
 use Illuminate\Support\Facades\Validator;
 
+
 class Slide_showController extends Controller
 {
     // Get all slides
     public function index()
     {
         try {
-            $slides = Slide_show::all();
+            $slides = Slide_show::with('SlideShowImages')->get();
 
             if ($slides->isEmpty()) {
                 return response()->json([
@@ -34,7 +35,7 @@ class Slide_showController extends Controller
     public function show($id)
     {
         try {
-            $slide = Slide_show::find($id);
+            $slide = Slide_show::with('slide_show_images')->find($id);
 
             if (!$slide) {
                 return response()->json([
@@ -59,7 +60,7 @@ class Slide_showController extends Controller
                 'title' => 'required|string|max:255',
                 'sub_title' => 'nullable|string|max:255',
                 'desc' => 'nullable|string',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+  
             ]);
 
             if ($validator->fails()) {
@@ -69,7 +70,7 @@ class Slide_showController extends Controller
                 ], 422);
             }
 
-            $path = null;
+        
             if ($request->hasFile('image')) {
                 $path = $request->file('image')->store('uploads/slide_show', 'public');
             }
@@ -78,7 +79,7 @@ class Slide_showController extends Controller
                 'title' => $request->title,
                 'sub_title' => $request->sub_title,
                 'desc' => $request->desc,
-                'image' => $path, // store raw path only, accessor handles the URL
+            
             ]);
 
             return response()->json([

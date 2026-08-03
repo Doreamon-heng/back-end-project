@@ -3,23 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Products;
 
-class Products_image extends Model
+class SlideShowImages extends Model
 {
-      protected $table = 'products_images';
+    protected $table = 'slide_shows_image';
 
     protected $fillable = [
-        'product_id',
+        'slide_show_id',
         'file_name',
-        'file_path',
         'image_url',
-        'is_enabled'
+        'is_enabled',
+        'is_disabled',
     ];
 
-    public function products()
+    public function slide_show()
     {
-        return $this->belongsTo(Products::class);
+        return $this->belongsTo(Slide_show::class, 'slide_show_id');
     }
 
     public function getStatusLabelAttribute()
