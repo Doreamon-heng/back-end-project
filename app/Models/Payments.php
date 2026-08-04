@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Order;
+use App\Models\Orders;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Payments extends Model
 {
+    use HasFactory, Notifiable, HasApiTokens;
     protected $fillable = [
         'receiver_phone',
         'receiver_location',
@@ -16,6 +20,7 @@ class Payments extends Model
 
     public function order()
     {
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Orders::class, 'order_id');
     }
+
 }

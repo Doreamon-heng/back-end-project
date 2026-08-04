@@ -3,10 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Bank;
+use App\Models\Products;
+use App\Models\Categories;
+use App\Models\Payments;
+use App\Models\Orders;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 
 class Customers extends Model
 {
+    use HasFactory, Notifiable, HasApiTokens;
     protected $table = 'customers';
 
     protected $fillable = [

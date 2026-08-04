@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Products;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Products_image extends Model
 {
+    use HasFactory;
       protected $table = 'products_images';
 
     protected $fillable = [

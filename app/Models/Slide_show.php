@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\SlideShowImages;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Slide_show extends Model
 {
+    use HasFactory;
+
+    protected $table = 'slide_shows';
     protected $fillable = [
         'title',
         'desc',

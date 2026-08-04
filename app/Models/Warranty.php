@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
+use App\Models\Products;
 
 class Warranty extends Model
 {
@@ -13,6 +13,6 @@ class Warranty extends Model
     ];
     public function product()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Products::class, 'product_id');
     }
 }
